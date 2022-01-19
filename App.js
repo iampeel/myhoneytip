@@ -1,5 +1,7 @@
 import MainPage from "./pages/MainPage";
+import AboutPage from "./pages/AboutPage";
 
 export default function App() {
-  return <MainPage />;
+  return <AboutPage />;
+  // return <MainPage />;
 }
