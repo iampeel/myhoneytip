@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import data from "../data.json";
+import Card from "../components/Card";
 
 export default function MainPage() {
   // 앱 실행시 경고창 무시
@@ -54,26 +55,8 @@ export default function MainPage() {
       {/* 카드 여러 개 묶음 */}
       <View style={styles.cardContainer}>
         {tip.map((content, i) => {
-          return (
-            // 카드 하나 묶음
-            <View style={styles.card} key={i}>
-              {/* 카드 이미지 */}
-              <Image style={styles.cardImage} source={{ uri: content.image }} />
-
-              {/* 카드 텍스트 묶음 */}
-              <View style={styles.cardText}>
-                <Text style={styles.cardTitle} numberOfLines={1}>
-                  {content.title}
-                </Text>
-                <Text style={styles.cardDesc} numberOfLines={3}>
-                  {content.desc}
-                </Text>
-                <Text style={styles.cardDate}>{content.date}</Text>
-              </View>
-              {/* // 카드 텍스트 묶음 */}
-            </View>
-            // //카드 하나 묶음
-          );
+          // Card.js로 보냄
+          return <Card content={content} key={i} />;
         })}
       </View>
       {/* // 카드 여러 개 묶음 */}
@@ -163,41 +146,5 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginTop: 10,
     marginLeft: 10,
-  },
-
-  // 카드 하나 묶음
-  card: {
-    flex: 1,
-    flexDirection: "row",
-    margin: 10,
-    paddingBottom: 10,
-  },
-
-  cardImage: {
-    flex: 1,
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-  },
-
-  // 카드 텍스트 묶음
-  cardText: {
-    flex: 2,
-    flexDirection: "column",
-    marginLeft: 10,
-  },
-
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-  },
-
-  cardDesc: {
-    fontSize: 15,
-  },
-
-  cardDate: {
-    fontSize: 10,
-    color: "#A6A6A6",
   },
 });

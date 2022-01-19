@@ -3,7 +3,7 @@ import AboutPage from "./pages/AboutPage";
 import DetailPage from "./pages/DetailPage";
 
 export default function App() {
-  return <DetailPage />;
+  // return <DetailPage />;
   // return <AboutPage />;
-  // return <MainPage />;
+  return <MainPage />;
 }
