@@ -9,6 +9,9 @@ import {
   Alert,
 } from "react-native";
 
+// 공유하기
+import { Share } from "react-native";
+
 export default function DetailPage({ navigation, route }) {
   // state로 변경
   // 안에 내용은 처음 렌더링할 때 아무 내용이 없으면 에러난다고 해서
@@ -55,6 +58,13 @@ export default function DetailPage({ navigation, route }) {
     Alert.alert("팝업!!");
   };
 
+  // 공유할 때 썸네일 내용
+  const share = () => {
+    Share.share({
+      message: `${tip.title} \n\n ${tip.desc} \n\n ${tip.image}`,
+    });
+  };
+
   return (
     // 전체
     <ScrollView style={styles.container}>
@@ -64,9 +74,14 @@ export default function DetailPage({ navigation, route }) {
       <View style={styles.textContainer}>
         <Text style={styles.title}>{tip.title}</Text>
         <Text style={styles.desc}>{tip.desc}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => popup()}>
-          <Text style={styles.buttonText}>팁 찜하기</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity style={styles.button} onPress={() => popup()}>
+            <Text style={styles.buttonText}>팁 찜하기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => share()}>
+            <Text style={styles.buttonText}>팁 공유하기</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -96,9 +111,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#eee",
   },
+  buttonGroup: {
+    flexDirection: "row",
+  },
   button: {
     width: 100,
     marginTop: 20,
+    marginRight: 10,
+    marginLeft: 10,
     padding: 10,
     borderWidth: 1,
     borderColor: "deeppink",

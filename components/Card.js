@@ -10,6 +10,7 @@ export default function Card({ content, navigation }) {
       style={styles.card}
       // 터치하면 DetailPage로 이동
       onPress={() => {
+        // content 추가
         navigation.navigate("DetailPage", content);
       }}
     >
