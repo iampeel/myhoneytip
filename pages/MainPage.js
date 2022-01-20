@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import main from "../assets/main.png";
 import {
   StyleSheet,
@@ -10,19 +10,38 @@ import {
 } from "react-native";
 import data from "../data.json";
 import Card from "../components/Card";
+import Loading from "../components/Loading";
 
 export default function MainPage() {
   // 앱 실행시 경고창 무시
   console.disableYellowBox = true;
 
+  const [state, setState] = useState([]);
+  const [ready, setReady] = useState(true);
+
   // 데이터 변수
   let tip = data.tip;
+
+  useEffect(() => {
+    // 로딩화면 보여주려고 일부러 삽입
+    // 1000은 1초, 1초 뒤에 실행하라는 함수
+    setTimeout(() => {
+      setState(tip);
+      setReady(false);
+    }, 2000);
+
+    // []를 안 쓰면 렌더링 될 때마다 이게 실행됨
+    // []: 처음 1번만 실행
+    // [state]: state라는 변수의 상태가 바뀔때만
+  }, []);
 
   // 날씨 변수
   let todayWeather = 27;
   let todayCondition = "흐림";
 
-  return (
+  return ready ? (
+    <Loading />
+  ) : (
     // 전체 묶음
     <ScrollView style={styles.container}>
       {/* 타이틀 */}
@@ -54,7 +73,8 @@ export default function MainPage() {
 
       {/* 카드 여러 개 묶음 */}
       <View style={styles.cardContainer}>
-        {tip.map((content, i) => {
+        {/* tip이 아닌 state로 변경 */}
+        {state.map((content, i) => {
           // Card.js로 보냄
           return <Card content={content} key={i} />;
         })}
