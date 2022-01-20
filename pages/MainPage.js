@@ -12,6 +12,9 @@ import data from "../data.json";
 import Card from "../components/Card";
 import Loading from "../components/Loading";
 
+// expo install expo-status-bar
+import { StatusBar } from "expo-status-bar";
+
 export default function MainPage() {
   // 앱 실행시 경고창 무시
   console.disableYellowBox = true;
@@ -64,6 +67,9 @@ export default function MainPage() {
   ) : (
     // 전체 묶음
     <ScrollView style={styles.container}>
+      {/* 상단 상태바, black과 light */}
+      <StatusBar style="black" />
+
       {/* 타이틀 */}
       <Text style={styles.title}>나만의 꿀팁</Text>
 
