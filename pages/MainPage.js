@@ -74,6 +74,16 @@ export default function MainPage({ navigation }) {
         오늘의 날씨: {todayWeather + "°C " + todayCondition}{" "}
       </Text>
 
+      {/* 소개 */}
+      <TouchableOpacity
+        style={styles.aboutButton}
+        onPress={() => {
+          navigation.navigate("AboutPage");
+        }}
+      >
+        <Text style={styles.aboutButtonText}>소개 페이지</Text>
+      </TouchableOpacity>
+
       {/* 상단 이미지 */}
       <Image style={styles.mainImage} source={main} />
 
@@ -226,5 +236,19 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginTop: 10,
     marginLeft: 10,
+  },
+  aboutButton: {
+    backgroundColor: "pink",
+    width: 100,
+    height: 40,
+    borderRadius: 10,
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginTop: 10,
+  },
+  aboutButtonText: {
+    color: "#fff",
+    textAlign: "center",
+    marginTop: 10,
   },
 });
