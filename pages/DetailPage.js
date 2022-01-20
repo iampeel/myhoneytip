@@ -8,10 +8,13 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 // 공유하기
 import { Share } from "react-native";
+
 // url 연결
+// expo install expo-linking
 import * as Linking from "expo-linking";
 
 export default function DetailPage({ navigation, route }) {
@@ -76,6 +79,7 @@ export default function DetailPage({ navigation, route }) {
   return (
     // 전체
     <ScrollView style={styles.container}>
+      <StatusBar style="light" />
       <Image style={styles.image} source={{ uri: tip.image }} />
 
       {/* 텍스트 묶음 */}
