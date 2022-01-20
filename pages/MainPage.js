@@ -12,10 +12,7 @@ import data from "../data.json";
 import Card from "../components/Card";
 import Loading from "../components/Loading";
 
-// expo install expo-status-bar
-import { StatusBar } from "expo-status-bar";
-
-export default function MainPage() {
+export default function MainPage({ navigation }) {
   // 앱 실행시 경고창 무시
   console.disableYellowBox = true;
 
@@ -29,6 +26,11 @@ export default function MainPage() {
   let tip = data.tip;
 
   useEffect(() => {
+    // navigation 객체 이용
+    navigation.setOptions({
+      title: "나만의 꿀팁",
+    });
+
     // 로딩화면 보여주려고 일부러 삽입
     // 1000은 1초, 1초 뒤에 실행하라는 함수
     setTimeout(() => {
@@ -67,12 +69,6 @@ export default function MainPage() {
   ) : (
     // 전체 묶음
     <ScrollView style={styles.container}>
-      {/* 상단 상태바, black과 light */}
-      <StatusBar style="black" />
-
-      {/* 타이틀 */}
-      <Text style={styles.title}>나만의 꿀팁</Text>
-
       {/* 날씨 */}
       <Text style={styles.weather}>
         오늘의 날씨: {todayWeather + "°C " + todayCondition}{" "}
@@ -123,7 +119,7 @@ export default function MainPage() {
         {/* tip --> state --> cateState */}
         {cateState.map((content, i) => {
           // Card.js로 보냄
-          return <Card content={content} key={i} />;
+          return <Card content={content} key={i} navigation={navigation} />;
         })}
       </View>
       {/* // 카드 여러 개 묶음 */}

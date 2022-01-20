@@ -1,14 +1,20 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 //비구조 할당 방식으로 넘긴 속성 데이터를 꺼내 사용함
-export default function Card({ content }) {
+export default function Card({ content, navigation }) {
   return (
     // 카드 하나 묶음
-    <View style={styles.card}>
+    // View --> TouchableOpacity
+    <TouchableOpacity
+      style={styles.card}
+      // 터치하면 DetailPage로 이동
+      onPress={() => {
+        navigation.navigate("DetailPage");
+      }}
+    >
       {/* 카드 이미지 */}
       <Image style={styles.cardImage} source={{ uri: content.image }} />
-
       {/* 카드 텍스트 묶음 */}
       <View style={styles.cardText}>
         <Text style={styles.cardTitle} numberOfLines={1}>
@@ -20,7 +26,7 @@ export default function Card({ content }) {
         <Text style={styles.cardDate}>{content.date}</Text>
       </View>
       {/* // 카드 텍스트 묶음 */}
-    </View>
+    </TouchableOpacity>
     // //카드 하나 묶음
   );
 }
