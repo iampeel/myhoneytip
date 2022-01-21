@@ -20,6 +20,7 @@ import * as Linking from "expo-linking";
 import { firebase_db } from "../firebaseConfig";
 
 // 사용자에게 id부여
+// expo install expo-application
 import * as Application from "expo-application";
 const isIOS = Platform.OS === "ios";
 
@@ -79,7 +80,12 @@ export default function DetailPage({ navigation, route }) {
     } else {
       uniqueId = Application.androidId;
     }
-    console.log("------", uniqueId);
+
+    firebase_db
+      .ref("/like/" + uniqueId + "/" + tip.idx)
+      .set(tip, function (error) {
+        console.log(error);
+      });
   };
 
   // 공유할 때 썸네일 내용
