@@ -21,6 +21,9 @@ import * as Location from "expo-location";
 // yarn add axios
 import axios from "axios";
 
+// expo install firebase
+import { firebase_db } from "../firebaseConfig";
+
 export default function MainPage({ navigation }) {
   // 앱 실행시 경고창 무시
   console.disableYellowBox = true;
@@ -47,15 +50,18 @@ export default function MainPage({ navigation }) {
       title: "나만의 꿀팁",
     });
 
-    // 로딩화면 보여주려고 일부러 삽입
-    // 1000은 1초, 1초 뒤에 실행하라는 함수
-    setTimeout(() => {
-      setState(tip);
-      setReady(false);
-      setCateState(tip);
-      // 위치
-      getLocation();
-    }, 2000);
+    firebase_db
+      .ref("/tip")
+      .once("value")
+      .then((snapshot) => {
+        console.log("파이어베이스에서 데이터 가져왔습니다!!");
+        let tip = snapshot.val();
+        setState(tip);
+        setReady(false);
+        setCateState(tip);
+        // 위치
+        getLocation();
+      });
 
     // []를 안 쓰면 렌더링 될 때마다 이게 실행됨
     // []: 처음 1번만 실행
