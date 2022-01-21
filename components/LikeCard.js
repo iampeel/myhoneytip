@@ -1,19 +1,41 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 
+// 사용자에게 id부여
+// expo install expo-application
+import * as Application from "expo-application";
+const isIOS = Platform.OS === "ios";
+
+import { firebase_db } from "../firebaseConfig";
+
 export default function LikeCard({ content, navigation }) {
+  let uniqueId;
+  if (isIOS) {
+    let iosId = Application.getIosIdForVendorAsync();
+    uniqueId = iosId;
+  } else {
+    uniqueId = Application.androidId;
+  }
+
+  const detail = () => {
+    navigation.navigate("DetailPage", { idx: content.idx });
+  };
+
+  const remove = () => {
+    firebase_db
+      .ref("/like/" + uniqueId + "/" + content.idx)
+      .remove()
+      .then(function () {
+        Alert.alert("삭제 완료");
+        reload();
+      });
+  };
+
   return (
-    // 카드 하나 묶음
-    // View --> TouchableOpacity
-    <TouchableOpacity
-      style={styles.card}
-      // 터치하면 DetailPage로 이동
-      onPress={() => {
-        // content 추가
-        navigation.navigate("DetailPage", content);
-      }}
-    >
+    //  카드 하나 묶음
+    <View style={styles.card}>
       <Image style={styles.cardImage} source={{ uri: content.image }} />
+      {/* 카드 텍스트 묶음 */}
       <View style={styles.cardText}>
         <Text style={styles.cardTitle} numberOfLines={1}>
           {content.title}
@@ -22,9 +44,21 @@ export default function LikeCard({ content, navigation }) {
           {content.desc}
         </Text>
         <Text style={styles.cardDate}>{content.date}</Text>
+
+        {/* 카드 버튼 묶음 */}
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity style={styles.button} onPress={() => detail()}>
+            <Text style={styles.buttonText}>자세히보기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => remove()}>
+            <Text style={styles.buttonText}>찜 해제</Text>
+          </TouchableOpacity>
+        </View>
+        {/* // 카드 버튼 묶음 */}
       </View>
-    </TouchableOpacity>
-    // //카드 하나 묶음
+      {/* // 카드 텍스트 묶음 */}
+    </View>
+    // // 카드 하나 묶음
   );
 }
 
@@ -58,5 +92,22 @@ const styles = StyleSheet.create({
   cardDate: {
     fontSize: 10,
     color: "#A6A6A6",
+  },
+  buttonGroup: {
+    flexDirection: "row",
+  },
+  button: {
+    width: 100,
+    marginTop: 20,
+    marginRight: 10,
+    marginLeft: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "deeppink",
+    borderRadius: 7,
+  },
+  buttonText: {
+    color: "deeppink",
+    textAlign: "center",
   },
 });
