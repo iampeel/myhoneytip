@@ -10,8 +10,9 @@ export default function Card({ content, navigation }) {
       style={styles.card}
       // 터치하면 DetailPage로 이동
       onPress={() => {
-        // content 추가
-        navigation.navigate("DetailPage", content);
+        // firebase에서 그때 그때 데이터를 가져와서 보여주려고
+        // { idx: content.idx } 추가
+        navigation.navigate("DetailPage", { idx: content.idx });
       }}
     >
       {/* 카드 이미지 */}

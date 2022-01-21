@@ -54,7 +54,6 @@ export default function MainPage({ navigation }) {
       .ref("/tip")
       .once("value")
       .then((snapshot) => {
-        console.log("파이어베이스에서 데이터 가져왔습니다!!");
         let tip = snapshot.val();
         setState(tip);
         setReady(false);

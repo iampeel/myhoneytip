@@ -17,6 +17,8 @@ import { Share } from "react-native";
 // expo install expo-linking
 import * as Linking from "expo-linking";
 
+import { firebase_db } from "../firebaseConfig";
+
 export default function DetailPage({ navigation, route }) {
   // state로 변경
   // 안에 내용은 처음 렌더링할 때 아무 내용이 없으면 에러난다고 해서
@@ -61,8 +63,16 @@ export default function DetailPage({ navigation, route }) {
       },
       headerTintColor: "#fff",
     });
-    // state 변경
-    setTip(route.params);
+
+    // firebase 연결해서 데이터 가져와서 보여주기
+    const { idx } = route.params;
+    firebase_db
+      .ref("/tip/" + idx)
+      .once("value")
+      .then((snapshot) => {
+        let tip = snapshot.val();
+        setTip(tip);
+      });
   }, []);
 
   const popup = () => {
