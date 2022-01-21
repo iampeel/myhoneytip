@@ -1,9 +1,18 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function LikeCard({ content }) {
+export default function LikeCard({ content, navigation }) {
   return (
-    <View style={styles.card}>
+    // 카드 하나 묶음
+    // View --> TouchableOpacity
+    <TouchableOpacity
+      style={styles.card}
+      // 터치하면 DetailPage로 이동
+      onPress={() => {
+        // content 추가
+        navigation.navigate("DetailPage", content);
+      }}
+    >
       <Image style={styles.cardImage} source={{ uri: content.image }} />
       <View style={styles.cardText}>
         <Text style={styles.cardTitle} numberOfLines={1}>
@@ -14,7 +23,8 @@ export default function LikeCard({ content }) {
         </Text>
         <Text style={styles.cardDate}>{content.date}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
+    // //카드 하나 묶음
   );
 }
 

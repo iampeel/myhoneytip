@@ -34,7 +34,7 @@ export default function LikePage({ navigation, route }) {
   return (
     <ScrollView style={styles.container}>
       {tip.map((content, i) => {
-        return <LikeCard key={i} content={content} />;
+        return <LikeCard key={i} content={content} navigation={navigation} />;
       })}
     </ScrollView>
   );
