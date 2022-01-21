@@ -19,6 +19,10 @@ import * as Linking from "expo-linking";
 
 import { firebase_db } from "../firebaseConfig";
 
+// 사용자에게 id부여
+import * as Application from "expo-application";
+const isIOS = Platform.OS === "ios";
+
 export default function DetailPage({ navigation, route }) {
   // state로 변경
   // 안에 내용은 처음 렌더링할 때 아무 내용이 없으면 에러난다고 해서
@@ -48,7 +52,7 @@ export default function DetailPage({ navigation, route }) {
   useEffect(() => {
     // 헤더 스타일링
     navigation.setOptions({
-      title: route.params.title,
+      title: "",
       headerStyle: {
         backgroundColor: "#000",
         shadowColor: "#000",
@@ -67,8 +71,15 @@ export default function DetailPage({ navigation, route }) {
       });
   }, []);
 
-  const popup = () => {
-    Alert.alert("팝업!!");
+  const like = async () => {
+    let uniqueId;
+    if (isIOS) {
+      let iosId = await Application.getIosIdForVendorAsync();
+      uniqueId = iosId;
+    } else {
+      uniqueId = Application.androidId;
+    }
+    console.log("------", uniqueId);
   };
 
   // 공유할 때 썸네일 내용
@@ -89,7 +100,7 @@ export default function DetailPage({ navigation, route }) {
         <Text style={styles.title}>{tip.title}</Text>
         <Text style={styles.desc}>{tip.desc}</Text>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity style={styles.button} onPress={() => popup()}>
+          <TouchableOpacity style={styles.button} onPress={() => like()}>
             <Text style={styles.buttonText}>팁 찜하기</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => share()}>

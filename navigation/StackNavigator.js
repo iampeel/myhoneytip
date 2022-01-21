@@ -31,6 +31,7 @@ const StackNavigator = () => {
         headerBackTitleVisible: false,
       }}
     >
+      {/* 둘다 이름이 같아야 하는 거 같음 */}
       {/* name은 상단에 표시되는 이름, component는 연결시킬 페이지 파일명*/}
       {/* 순차적으로 읽음. 맨 위에 있는 것을 첫 화면으로 보여줌 */}
       <Stack.Screen name="MainPage" component={MainPage} />
