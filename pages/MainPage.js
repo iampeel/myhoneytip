@@ -122,6 +122,14 @@ export default function MainPage({ navigation }) {
         >
           <Text style={styles.middleButtonText}>반려견</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.middleButton04}
+          onPress={() => {
+            navigation.navigate("LikePage");
+          }}
+        >
+          <Text style={styles.middleButtonText}>꿀팁 찜</Text>
+        </TouchableOpacity>
       </ScrollView>
 
       {/* 카드 여러 개 묶음 */}
